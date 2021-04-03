@@ -5,6 +5,7 @@
 #include <QtWidgets/QMainWindow>
 #include "bitmapfont.h"
 #include "bitmapfontcharacterlist.h"
+#include "charactereditor.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,7 +27,8 @@ private slots:
     void on_pushButtonRemoveCharacter_clicked();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow* ui;
+    CharacterEditor* m_characterEditor;
 
     BitmapFont m_bitmapFont;
     BitmapFontCharacterList m_bitmapFontCharacterList;

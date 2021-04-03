@@ -10,6 +10,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    m_characterEditor = new CharacterEditor();
+    ui->frameLayout->insertWidget(0, m_characterEditor);
+
     ui->treeViewCharacters->setModel(&m_bitmapFontCharacterList);
 }
 
@@ -21,12 +24,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_action_New_triggered()
 {
-    NewBitmapFontDialog dialog(this);
+    NewBitmapFontDialog dialog(m_bitmapFont.metrics, this);
 
     if (dialog.exec() == QDialog::Accepted)
     {
         auto bitmapFontMetrics = dialog.getBitmapFontMetrics();
 
+        m_characterEditor->setBitmapFontMetrics(bitmapFontMetrics);
         m_bitmapFont = BitmapFont(bitmapFontMetrics);
         m_bitmapFontCharacterList.update(m_bitmapFont.characters);
     }

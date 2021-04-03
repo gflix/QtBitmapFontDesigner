@@ -14,7 +14,9 @@ class NewBitmapFontDialog : public QDialog
 
 public:
 
-    explicit NewBitmapFontDialog(QWidget *parent = nullptr);
+    explicit NewBitmapFontDialog(
+        const BitmapFontMetrics& currentMetrics = BitmapFontMetrics(),
+        QWidget *parent = nullptr);
     ~NewBitmapFontDialog();
 
     BitmapFontMetrics getBitmapFontMetrics(void) const;

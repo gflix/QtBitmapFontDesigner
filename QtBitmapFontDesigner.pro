@@ -19,7 +19,9 @@ SOURCES += \
     bitmapfont.cpp \
     bitmapfontcharacter.cpp \
     bitmapfontcharacterlist.cpp \
+    bitmapfontcharactermatrix.cpp \
     bitmapfontmetrics.cpp \
+    charactereditor.cpp \
     main.cpp \
     mainwindow.cpp \
     newbitmapfontdialog.cpp
@@ -28,7 +30,9 @@ HEADERS += \
     bitmapfont.h \
     bitmapfontcharacter.h \
     bitmapfontcharacterlist.h \
+    bitmapfontcharactermatrix.h \
     bitmapfontmetrics.h \
+    charactereditor.h \
     mainwindow.h \
     newbitmapfontdialog.h
 

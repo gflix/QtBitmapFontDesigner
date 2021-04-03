@@ -30,10 +30,10 @@
       <item row="0" column="1">
        <widget class="QSpinBox" name="spinBoxAscenders">
         <property name="minimum">
-         <number>1</number>
+         <number>4</number>
         </property>
         <property name="maximum">
-         <number>16</number>
+         <number>20</number>
         </property>
         <property name="value">
          <number>8</number>
