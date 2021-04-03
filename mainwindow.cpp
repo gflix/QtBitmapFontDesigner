@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QMessageBox>
 #include "newbitmapfontdialog.h"
 #include "mainwindow.h"
@@ -14,6 +15,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->frameLayout->insertWidget(0, m_characterEditor);
 
     ui->treeViewCharacters->setModel(&m_bitmapFontCharacterList);
+
+    connect(m_characterEditor, &CharacterEditor::characterUpdated, this, &MainWindow::on_characterUpdated);
+    connect(
+        ui->treeViewCharacters->selectionModel(), &QItemSelectionModel::currentChanged,
+        this, &MainWindow::on_changedCharacter
+    );
 }
 
 MainWindow::~MainWindow()
@@ -49,8 +56,19 @@ void MainWindow::on_pushButtonAddCharacter_clicked()
         return;
     }
 
-    m_bitmapFont.characters[newCharacter[0]] = BitmapFontCharacter(newCharacter[0]);
+    auto currentIndex = ui->treeViewCharacters->currentIndex();
+    if (currentIndex.isValid())
+    {
+        auto& currentCharacter = m_bitmapFont.characters[m_bitmapFontCharacterList.get(currentIndex)];
+        m_bitmapFont.characters[newCharacter[0]] = BitmapFontCharacter(newCharacter[0], currentCharacter.width, currentCharacter.matrix);
+    }
+    else
+    {
+        m_bitmapFont.characters[newCharacter[0]] = BitmapFontCharacter(newCharacter[0]);
+    }
+
     m_bitmapFontCharacterList.update(m_bitmapFont.characters);
+    ui->treeViewCharacters->setCurrentIndex(m_bitmapFontCharacterList.get(newCharacter[0]));
 }
 
 void MainWindow::on_pushButtonRemoveCharacter_clicked()
@@ -66,5 +84,41 @@ void MainWindow::on_pushButtonRemoveCharacter_clicked()
     {
         m_bitmapFont.characters.remove(selectedCharacter);
         m_bitmapFontCharacterList.update(m_bitmapFont.characters);
+    }
+}
+
+void MainWindow::on_removeCharacterColumn_clicked()
+{
+    m_characterEditor->removeCharacterColumn();
+}
+
+void MainWindow::on_addCharacterColumn_clicked()
+{
+    m_characterEditor->addCharacterColumn();
+}
+
+void MainWindow::on_characterUpdated(void)
+{
+    auto currentIndex = ui->treeViewCharacters->currentIndex();
+    if (currentIndex.isValid())
+    {
+        auto selectedCharacter = m_bitmapFontCharacterList.get(currentIndex);
+        auto updatedCharacter = m_characterEditor->getBitmapFontCharacter();
+        updatedCharacter.character = selectedCharacter;
+        m_bitmapFont.characters[selectedCharacter] = updatedCharacter;
+        m_bitmapFontCharacterList.updateCharacter(updatedCharacter);
+    }
+    else
+    {
+        qInfo() << "nothing selected";
+    }
+}
+
+void MainWindow::on_changedCharacter(const QModelIndex& index, const QModelIndex&)
+{
+    if (index.isValid())
+    {
+        qInfo() << "MainWindow::on_changedCharacter(" << index << ")";
+        m_characterEditor->setBitmapFontCharacter(m_bitmapFont.characters[m_bitmapFontCharacterList.get(index)]);
     }
 }

@@ -26,6 +26,13 @@ private slots:
 
     void on_pushButtonRemoveCharacter_clicked();
 
+    void on_removeCharacterColumn_clicked();
+
+    void on_addCharacterColumn_clicked();
+
+    void on_characterUpdated(void);
+    void on_changedCharacter(const QModelIndex& index, const QModelIndex& previous);
+
 private:
     Ui::MainWindow* ui;
     CharacterEditor* m_characterEditor;

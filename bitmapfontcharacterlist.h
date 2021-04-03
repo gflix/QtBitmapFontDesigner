@@ -15,7 +15,9 @@ public:
     explicit BitmapFontCharacterList(QObject *parent = nullptr);
 
     void update(const BitmapFontCharacters& characters);
+    void updateCharacter(const BitmapFontCharacter& character);
     QChar get(const QModelIndex& index) const;
+    QModelIndex get(QChar character) const;
 
     // Header:
     int columnCount(const QModelIndex&) const override;

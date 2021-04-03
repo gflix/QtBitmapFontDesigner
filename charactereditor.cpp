@@ -17,6 +17,8 @@ CharacterEditor::CharacterEditor(QWidget* parent):
 void CharacterEditor::setBitmapFontCharacter(const BitmapFontCharacter& character)
 {
     m_character = character;
+
+    update();
 }
 
 void CharacterEditor::setBitmapFontMetrics(const BitmapFontMetrics& metrics)
@@ -24,6 +26,33 @@ void CharacterEditor::setBitmapFontMetrics(const BitmapFontMetrics& metrics)
     m_metrics = metrics;
 
     update();
+}
+
+const BitmapFontCharacter& CharacterEditor::getBitmapFontCharacter(void) const
+{
+    return m_character;
+}
+
+void CharacterEditor::addCharacterColumn(void)
+{
+    ++m_character.width;
+    m_character.matrix.append(BitmapFontCharacterColumn());
+    update();
+
+    emit characterUpdated();
+}
+
+void CharacterEditor::removeCharacterColumn(void)
+{
+    if (m_character.width <= 1)
+    {
+        return;
+    }
+    --m_character.width;
+    m_character.matrix.removeLast();
+    update();
+
+    emit characterUpdated();
 }
 
 void CharacterEditor::mousePressEvent(QMouseEvent* event)
@@ -55,6 +84,8 @@ void CharacterEditor::mousePressEvent(QMouseEvent* event)
         {
             matrixColumn[row] = !matrixColumn[row];
             update();
+
+            emit characterUpdated();
         }
     }
 }

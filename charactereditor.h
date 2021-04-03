@@ -14,7 +14,13 @@ public:
     void setBitmapFontCharacter(const BitmapFontCharacter& character);
     void setBitmapFontMetrics(const BitmapFontMetrics& metrics);
 
+    const BitmapFontCharacter& getBitmapFontCharacter(void) const;
+
+    void addCharacterColumn(void);
+    void removeCharacterColumn(void);
+
 signals:
+    void characterUpdated(void);
 
 protected:
     BitmapFontCharacter m_character;
