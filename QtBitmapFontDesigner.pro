@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets xml
 
 CONFIG += c++11
 
@@ -21,6 +21,8 @@ SOURCES += \
     bitmapfontcharacterlist.cpp \
     bitmapfontcharactermatrix.cpp \
     bitmapfontmetrics.cpp \
+    bitmapfontmetricsprotocol.cpp \
+    bitmapfontprotocol.cpp \
     charactereditor.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -32,9 +34,12 @@ HEADERS += \
     bitmapfontcharacterlist.h \
     bitmapfontcharactermatrix.h \
     bitmapfontmetrics.h \
+    bitmapfontmetricsprotocol.h \
+    bitmapfontprotocol.h \
     charactereditor.h \
     mainwindow.h \
-    newbitmapfontdialog.h
+    newbitmapfontdialog.h \
+    xmltags.h
 
 FORMS += \
     mainwindow.ui \
