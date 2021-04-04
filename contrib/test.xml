@@ -2,7 +2,139 @@
 <BitmapFont>
   <Metrics ascenders="6" descenders="2"/>
   <Characters>
-    <Character width="5" codepoint="65">
+    <Character codepoint="48" width="4">
+      <Matrix>
+        <Row>.XX.</Row>
+        <Row>X..X</Row>
+        <Row>X..X</Row>
+        <Row>X..X</Row>
+        <Row>X..X</Row>
+        <Row>.XX.</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="49" width="4">
+      <Matrix>
+        <Row>..X.</Row>
+        <Row>.XX.</Row>
+        <Row>X.X.</Row>
+        <Row>..X.</Row>
+        <Row>..X.</Row>
+        <Row>..X.</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="50" width="4">
+      <Matrix>
+        <Row>.XX.</Row>
+        <Row>X..X</Row>
+        <Row>..X.</Row>
+        <Row>.X..</Row>
+        <Row>X...</Row>
+        <Row>XXXX</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="51" width="4">
+      <Matrix>
+        <Row>XXXX</Row>
+        <Row>...X</Row>
+        <Row>..X.</Row>
+        <Row>..XX</Row>
+        <Row>X..X</Row>
+        <Row>.XX.</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="52" width="4">
+      <Matrix>
+        <Row>..X.</Row>
+        <Row>.X..</Row>
+        <Row>X...</Row>
+        <Row>X.X.</Row>
+        <Row>XXXX</Row>
+        <Row>..X.</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="53" width="4">
+      <Matrix>
+        <Row>XXXX</Row>
+        <Row>X...</Row>
+        <Row>XXX.</Row>
+        <Row>...X</Row>
+        <Row>X..X</Row>
+        <Row>.XX.</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="54" width="4">
+      <Matrix>
+        <Row>.XX.</Row>
+        <Row>X...</Row>
+        <Row>XXX.</Row>
+        <Row>X..X</Row>
+        <Row>X..X</Row>
+        <Row>.XX.</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="55" width="4">
+      <Matrix>
+        <Row>XXXX</Row>
+        <Row>...X</Row>
+        <Row>...X</Row>
+        <Row>..X.</Row>
+        <Row>.X..</Row>
+        <Row>.X..</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="56" width="4">
+      <Matrix>
+        <Row>.XX.</Row>
+        <Row>X..X</Row>
+        <Row>.XX.</Row>
+        <Row>X..X</Row>
+        <Row>X..X</Row>
+        <Row>.XX.</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="57" width="4">
+      <Matrix>
+        <Row>.XX.</Row>
+        <Row>X..X</Row>
+        <Row>X..X</Row>
+        <Row>.XXX</Row>
+        <Row>..X.</Row>
+        <Row>.X..</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="58" width="1">
+      <Matrix>
+        <Row>.</Row>
+        <Row>.</Row>
+        <Row>X</Row>
+        <Row>.</Row>
+        <Row>X</Row>
+        <Row>.</Row>
+        <Row>.</Row>
+        <Row>.</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="65" width="5">
       <Matrix>
         <Row>..X..</Row>
         <Row>.X.X.</Row>
@@ -14,7 +146,7 @@
         <Row>.....</Row>
       </Matrix>
     </Character>
-    <Character width="4" codepoint="66">
+    <Character codepoint="66" width="4">
       <Matrix>
         <Row>XXX.</Row>
         <Row>X..X</Row>
@@ -26,7 +158,7 @@
         <Row>....</Row>
       </Matrix>
     </Character>
-    <Character width="4" codepoint="67">
+    <Character codepoint="67" width="4">
       <Matrix>
         <Row>.XX.</Row>
         <Row>X..X</Row>
@@ -38,7 +170,7 @@
         <Row>....</Row>
       </Matrix>
     </Character>
-    <Character width="4" codepoint="68">
+    <Character codepoint="68" width="4">
       <Matrix>
         <Row>XXX.</Row>
         <Row>X..X</Row>
@@ -50,7 +182,7 @@
         <Row>....</Row>
       </Matrix>
     </Character>
-    <Character width="4" codepoint="69">
+    <Character codepoint="69" width="4">
       <Matrix>
         <Row>XXXX</Row>
         <Row>X...</Row>
@@ -62,7 +194,7 @@
         <Row>....</Row>
       </Matrix>
     </Character>
-    <Character width="4" codepoint="70">
+    <Character codepoint="70" width="4">
       <Matrix>
         <Row>XXXX</Row>
         <Row>X...</Row>
