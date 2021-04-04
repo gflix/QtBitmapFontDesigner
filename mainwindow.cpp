@@ -192,3 +192,39 @@ void MainWindow::on_action_Quit_triggered()
 {
     close();
 }
+
+void MainWindow::on_action_Open_triggered()
+{
+    auto filename = QFileDialog::getOpenFileName(this, "Open bitmap font", QString(), "XML files (*.xml)");
+    if (filename.isEmpty())
+    {
+        return;
+    }
+
+    try
+    {
+        QFile xmlFile(filename);
+        if (!xmlFile.open(QFile::ReadOnly))
+        {
+            throw std::runtime_error("error opening XML file \"" + filename.toStdString() + "\" for reading");
+        }
+        QDomDocument domDocument;
+        QString parseError;
+        if (!domDocument.setContent(&xmlFile, &parseError))
+        {
+            throw std::runtime_error(
+                QString("error parsing XML file \"%1\": %2").arg(filename).arg(parseError).toStdString());
+        }
+
+        m_bitmapFont = bitmapFontFromDomDocument(domDocument);
+        m_characterEditor->setBitmapFontMetrics(m_bitmapFont.metrics);
+        m_bitmapFontCharacterList.update(m_bitmapFont.characters);
+
+        targetFilename = filename;
+        updateWindowTitle();
+    }
+    catch (const std::exception& e)
+    {
+        QMessageBox::critical(this, "Error", QString("Could not load the bitmap font (%1)!").arg(e.what()));
+    }
+}

@@ -5,5 +5,6 @@
 #include "bitmapfont.h"
 
 QDomDocument bitmapFontToDomDocument(const BitmapFont& bitmapFont);
+BitmapFont bitmapFontFromDomDocument(const QDomDocument& document);
 
 #endif // BITMAPFONTPROTOCOL_H

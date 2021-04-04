@@ -8,4 +8,6 @@
 
 void bitmapFontCharacterMatrixToXml(QDomDocument& document, QDomElement& base, const BitmapFontCharacterMatrix& matrix, const QSize& size);
 
+BitmapFontCharacterMatrix bitmapFontCharacterMatrixFromXml(const QDomElement& base);
+
 #endif // BITMAPFONTCHARACTERMATRIXPROTOCOL_H

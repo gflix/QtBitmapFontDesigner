@@ -39,6 +39,8 @@ private slots:
 
     void on_action_Quit_triggered();
 
+    void on_action_Open_triggered();
+
 private:
     Ui::MainWindow* ui;
     CharacterEditor* m_characterEditor;

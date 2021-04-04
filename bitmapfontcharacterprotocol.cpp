@@ -21,3 +21,24 @@ void bitmapFontCharacterToXml(QDomDocument& document, QDomElement& base, const B
     bitmapFontCharacterMatrixToXml(document, matrixElement, character.matrix, QSize(character.width, metrics.ascenders + metrics.descenders));
     base.appendChild(matrixElement);
 }
+
+BitmapFontCharacters bitmapFontCharactersFromXml(const QDomElement& base)
+{
+    BitmapFontCharacters characters;
+
+    for (auto node = base.firstChildElement(XML_TAG_CHARACTER); node.isElement(); node = node.nextSiblingElement(XML_TAG_CHARACTER))
+    {
+        auto character = bitmapFontCharacterFromXml(node);
+        characters[character.character] = character;
+    }
+
+    return characters;
+}
+
+BitmapFontCharacter bitmapFontCharacterFromXml(const QDomElement& base)
+{
+    return BitmapFontCharacter(
+        QChar(base.attribute(XML_ATTRIBUTE_CODEPOINT).toInt()),
+        base.attribute(XML_ATTRIBUTE_WIDTH).toInt(),
+        bitmapFontCharacterMatrixFromXml(base.firstChildElement(XML_TAG_MATRIX)));
+}

@@ -32,3 +32,25 @@ void bitmapFontCharacterMatrixToXml(QDomDocument& document, QDomElement& base, c
         base.appendChild(rowElement);
     }
 }
+
+BitmapFontCharacterMatrix bitmapFontCharacterMatrixFromXml(const QDomElement& base)
+{
+    BitmapFontCharacterMatrix matrix;
+
+    for (auto node = base.firstChildElement(XML_TAG_ROW); node.isElement(); node = node.nextSiblingElement(XML_TAG_ROW))
+    {
+        auto text = node.text();
+        int columnIndex = 0;
+        for (auto& character: text)
+        {
+            if (matrix.count() <= columnIndex)
+            {
+                matrix.append(BitmapFontCharacterColumn());
+            }
+            matrix[columnIndex].append(character == 'X');
+            ++columnIndex;
+        }
+    }
+
+    return matrix;
+}
