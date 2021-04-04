@@ -1,5 +1,7 @@
 #include <QDebug>
+#include <QFileDialog>
 #include <QMessageBox>
+#include "bitmapfontprotocol.h"
 #include "newbitmapfontdialog.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -10,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     , m_bitmapFontCharacterList(this)
 {
     ui->setupUi(this);
+    updateWindowTitle();
 
     m_characterEditor = new CharacterEditor();
     ui->frameLayout->insertWidget(0, m_characterEditor);
@@ -40,6 +43,9 @@ void MainWindow::on_action_New_triggered()
         m_characterEditor->setBitmapFontMetrics(bitmapFontMetrics);
         m_bitmapFont = BitmapFont(bitmapFontMetrics);
         m_bitmapFontCharacterList.update(m_bitmapFont.characters);
+
+        targetFilename.clear();
+        updateWindowTitle();
     }
 }
 
@@ -121,4 +127,68 @@ void MainWindow::on_changedCharacter(const QModelIndex& index, const QModelIndex
         qInfo() << "MainWindow::on_changedCharacter(" << index << ")";
         m_characterEditor->setBitmapFontCharacter(m_bitmapFont.characters[m_bitmapFontCharacterList.get(index)]);
     }
+}
+
+void MainWindow::updateWindowTitle(void)
+{
+    if (targetFilename.isEmpty())
+    {
+        setWindowTitle("QtBitmapFontDesigner - untitled");
+    }
+    else
+    {
+        setWindowTitle(QString("QtBitmapFontDesigner - %1").arg(targetFilename));
+    }
+}
+
+void MainWindow::on_action_Save_triggered()
+{
+    if (targetFilename.isEmpty())
+    {
+        on_action_SaveAs_triggered();
+    }
+    else
+    {
+        saveTo(targetFilename);
+    }
+}
+
+void MainWindow::on_action_SaveAs_triggered()
+{
+    auto filename = QFileDialog::getSaveFileName(this, "Save to", QString(), "XML files (*.xml)");
+    if (filename.isEmpty())
+    {
+        return;
+    }
+    saveTo(filename);
+}
+
+void MainWindow::saveTo(const QString& filename)
+{
+    try
+    {
+        auto domDocument = bitmapFontToDomDocument(m_bitmapFont);
+        auto processingInstructions = domDocument.createProcessingInstruction("xml", R"x(version="1.0" encoding="utf-8")x");
+        domDocument.insertBefore(processingInstructions, domDocument.firstChild());
+
+        QFile xmlFile(filename);
+        if (!xmlFile.open(QFile::WriteOnly | QFile::Text))
+        {
+            throw std::runtime_error("error opening XML file \"" + filename.toStdString() + "\" for writing");
+        }
+        QTextStream xmlStream(&xmlFile);
+        domDocument.save(xmlStream, 2);
+
+        targetFilename = filename;
+        updateWindowTitle();
+    }
+    catch (const std::exception& e)
+    {
+        QMessageBox::critical(this, "Error", QString("Could not save the bitmap font (%1)!").arg(e.what()));
+    }
+}
+
+void MainWindow::on_action_Quit_triggered()
+{
+    close();
 }

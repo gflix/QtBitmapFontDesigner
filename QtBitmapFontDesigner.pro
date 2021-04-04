@@ -20,6 +20,8 @@ SOURCES += \
     bitmapfontcharacter.cpp \
     bitmapfontcharacterlist.cpp \
     bitmapfontcharactermatrix.cpp \
+    bitmapfontcharactermatrixprotocol.cpp \
+    bitmapfontcharacterprotocol.cpp \
     bitmapfontmetrics.cpp \
     bitmapfontmetricsprotocol.cpp \
     bitmapfontprotocol.cpp \
@@ -33,6 +35,8 @@ HEADERS += \
     bitmapfontcharacter.h \
     bitmapfontcharacterlist.h \
     bitmapfontcharactermatrix.h \
+    bitmapfontcharactermatrixprotocol.h \
+    bitmapfontcharacterprotocol.h \
     bitmapfontmetrics.h \
     bitmapfontmetricsprotocol.h \
     bitmapfontprotocol.h \

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BitmapFont>
+  <Metrics ascenders="6" descenders="2"/>
+  <Characters>
+    <Character width="5" codepoint="65">
+      <Matrix>
+        <Row>..X..</Row>
+        <Row>.X.X.</Row>
+        <Row>X...X</Row>
+        <Row>XXXXX</Row>
+        <Row>X...X</Row>
+        <Row>X...X</Row>
+        <Row>.....</Row>
+        <Row>.....</Row>
+      </Matrix>
+    </Character>
+    <Character width="4" codepoint="66">
+      <Matrix>
+        <Row>XXX.</Row>
+        <Row>X..X</Row>
+        <Row>XXX.</Row>
+        <Row>X..X</Row>
+        <Row>X..X</Row>
+        <Row>XXX.</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+    <Character width="4" codepoint="67">
+      <Matrix>
+        <Row>.XX.</Row>
+        <Row>X..X</Row>
+        <Row>X...</Row>
+        <Row>X...</Row>
+        <Row>X..X</Row>
+        <Row>.XX.</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+    <Character width="4" codepoint="68">
+      <Matrix>
+        <Row>XXX.</Row>
+        <Row>X..X</Row>
+        <Row>X..X</Row>
+        <Row>X..X</Row>
+        <Row>X..X</Row>
+        <Row>XXX.</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+    <Character width="4" codepoint="69">
+      <Matrix>
+        <Row>XXXX</Row>
+        <Row>X...</Row>
+        <Row>XXX.</Row>
+        <Row>X...</Row>
+        <Row>X...</Row>
+        <Row>XXXX</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+    <Character width="4" codepoint="70">
+      <Matrix>
+        <Row>XXXX</Row>
+        <Row>X...</Row>
+        <Row>XXX.</Row>
+        <Row>X...</Row>
+        <Row>X...</Row>
+        <Row>X...</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+      </Matrix>
+    </Character>
+  </Characters>
+</BitmapFont>

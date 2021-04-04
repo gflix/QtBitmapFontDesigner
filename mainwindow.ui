@@ -114,6 +114,8 @@
     <addaction name="action_New"/>
     <addaction name="action_Save"/>
     <addaction name="action_SaveAs"/>
+    <addaction name="separator"/>
+    <addaction name="action_Quit"/>
    </widget>
    <addaction name="menuBitmapFontDesigner"/>
   </widget>
@@ -137,6 +139,14 @@
   <action name="action_SaveAs">
    <property name="text">
     <string>Save &amp;as...</string>
+   </property>
+  </action>
+  <action name="action_Quit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>
