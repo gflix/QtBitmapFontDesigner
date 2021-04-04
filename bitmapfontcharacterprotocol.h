@@ -12,4 +12,6 @@ void bitmapFontCharacterToXml(QDomDocument& document, QDomElement& base, const B
 BitmapFontCharacters bitmapFontCharactersFromXml(const QDomElement& base);
 BitmapFontCharacter bitmapFontCharacterFromXml(const QDomElement& base);
 
+void bitmapFontCharacterToImageFile(const QString& filename, const BitmapFontCharacter& character, const BitmapFontMetrics& metrics);
+
 #endif // BITMAPFONTCHARACTERPROTOCOL_H

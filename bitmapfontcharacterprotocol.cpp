@@ -1,3 +1,5 @@
+#include <QImage>
+#include <QImageWriter>
 #include "bitmapfontcharactermatrixprotocol.h"
 #include "bitmapfontcharacterprotocol.h"
 #include "xmltags.h"
@@ -41,4 +43,32 @@ BitmapFontCharacter bitmapFontCharacterFromXml(const QDomElement& base)
         QChar(base.attribute(XML_ATTRIBUTE_CODEPOINT).toInt()),
         base.attribute(XML_ATTRIBUTE_WIDTH).toInt(),
         bitmapFontCharacterMatrixFromXml(base.firstChildElement(XML_TAG_MATRIX)));
+}
+
+void bitmapFontCharacterToImageFile(const QString& filename, const BitmapFontCharacter& character, const BitmapFontMetrics& metrics)
+{
+    QSize size { character.width, metrics.ascenders + metrics.descenders };
+    QImage image(size, QImage::Format_RGB32);
+    image.fill(Qt::black);
+
+    int x = 0;
+    for (auto& column: character.matrix)
+    {
+        int y = 0;
+        for (auto& row: column)
+        {
+            if (row)
+            {
+                image.setPixelColor(x, y, Qt::white);
+            }
+            ++y;
+        }
+        ++x;
+    }
+
+    QImageWriter imageWriter(filename);
+    if (!imageWriter.write(image))
+    {
+        throw std::runtime_error(QString("could not write image to \"%1\"").arg(filename).toStdString());
+    }
 }

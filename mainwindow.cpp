@@ -1,6 +1,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QMessageBox>
+#include "bitmapfontcharacterprotocol.h"
 #include "bitmapfontprotocol.h"
 #include "newbitmapfontdialog.h"
 #include "mainwindow.h"
@@ -114,17 +115,12 @@ void MainWindow::on_characterUpdated(void)
         m_bitmapFont.characters[selectedCharacter] = updatedCharacter;
         m_bitmapFontCharacterList.updateCharacter(updatedCharacter);
     }
-    else
-    {
-        qInfo() << "nothing selected";
-    }
 }
 
 void MainWindow::on_changedCharacter(const QModelIndex& index, const QModelIndex&)
 {
     if (index.isValid())
     {
-        qInfo() << "MainWindow::on_changedCharacter(" << index << ")";
         m_characterEditor->setBitmapFontCharacter(m_bitmapFont.characters[m_bitmapFontCharacterList.get(index)]);
     }
 }
@@ -227,4 +223,81 @@ void MainWindow::on_action_Open_triggered()
     {
         QMessageBox::critical(this, "Error", QString("Could not load the bitmap font (%1)!").arg(e.what()));
     }
+}
+
+void MainWindow::on_action_Export_triggered()
+{
+    QFileDialog dialog { this, "Export to", QString(), "Qt resource files (*.qrc)" };
+    dialog.setDefaultSuffix(".qrc");
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+
+    if (dialog.exec() == QFileDialog::Accepted)
+    {
+        try
+        {
+            exportTo(dialog.selectedFiles().first());
+        }
+        catch (const std::exception& e)
+        {
+            QMessageBox::critical(this, "Error", QString("Could not export the bitmap font (%1)!").arg(e.what()));
+        }
+    }
+}
+
+void MainWindow::exportTo(const QString& filename)
+{
+    auto fileInfo = QFileInfo(filename);
+    auto basename = fileInfo.baseName();
+    auto resourcesDirectory = QDir(fileInfo.dir().absoluteFilePath(basename));
+
+    if (resourcesDirectory.exists())
+    {
+        if (!resourcesDirectory.removeRecursively())
+        {
+            throw std::runtime_error(QString("could not remove path \"%1\"").arg(resourcesDirectory.absolutePath()).toStdString());
+        }
+    }
+
+    if (!resourcesDirectory.mkpath("."))
+    {
+        throw std::runtime_error(QString("could not create path \"%1\"").arg(resourcesDirectory.absolutePath()).toStdString());
+    }
+
+    exportQtResourceFile(filename, basename);
+    exportManifestFile(resourcesDirectory.filePath("manifest.xml"));
+
+    for (auto& character: m_bitmapFont.characters)
+    {
+        bitmapFontCharacterToImageFile(resourcesDirectory.filePath(QString("character-%1.png").arg(character.character.unicode())), character, m_bitmapFont.metrics);
+    }
+}
+
+void MainWindow::exportQtResourceFile(const QString& filename, const QString& resourcesPath)
+{
+    auto domDocument = bitmapFontToQtResourceDocument(m_bitmapFont, resourcesPath);
+    auto processingInstructions = domDocument.createProcessingInstruction("xml", R"x(version="1.0" encoding="utf-8")x");
+    domDocument.insertBefore(processingInstructions, domDocument.firstChild());
+
+    QFile xmlFile(filename);
+    if (!xmlFile.open(QFile::WriteOnly | QFile::Text))
+    {
+        throw std::runtime_error("error opening XML file \"" + filename.toStdString() + "\" for writing");
+    }
+    QTextStream xmlStream(&xmlFile);
+    domDocument.save(xmlStream, 2);
+}
+
+void MainWindow::exportManifestFile(const QString& filename)
+{
+    auto domDocument = bitmapFontToManifestDocument(m_bitmapFont);
+    auto processingInstructions = domDocument.createProcessingInstruction("xml", R"x(version="1.0" encoding="utf-8")x");
+    domDocument.insertBefore(processingInstructions, domDocument.firstChild());
+
+    QFile xmlFile(filename);
+    if (!xmlFile.open(QFile::WriteOnly | QFile::Text))
+    {
+        throw std::runtime_error("error opening XML file \"" + filename.toStdString() + "\" for writing");
+    }
+    QTextStream xmlStream(&xmlFile);
+    domDocument.save(xmlStream, 2);
 }

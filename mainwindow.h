@@ -41,6 +41,8 @@ private slots:
 
     void on_action_Open_triggered();
 
+    void on_action_Export_triggered();
+
 private:
     Ui::MainWindow* ui;
     CharacterEditor* m_characterEditor;
@@ -51,5 +53,8 @@ private:
 
     void updateWindowTitle(void);
     void saveTo(const QString& filename);
+    void exportTo(const QString& filename);
+    void exportQtResourceFile(const QString& filename, const QString& resourcesPath);
+    void exportManifestFile(const QString& filename);
 };
 #endif // MAINWINDOW_H

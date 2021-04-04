@@ -61,7 +61,6 @@ void CharacterEditor::mousePressEvent(QMouseEvent* event)
     {
         return;
     }
-    qInfo() << "CharacterEditor::mousePressEvent(" << event->x() << "," << event->y() << ")";
 
     int xOffset = (width() - getBlockEdgeLength() * getTotalWidth()) / 2;
     int column = -1;
