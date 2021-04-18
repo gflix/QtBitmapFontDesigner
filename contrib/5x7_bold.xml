@@ -825,8 +825,8 @@
       <Matrix>
         <Row>.....</Row>
         <Row>.....</Row>
-        <Row>.....</Row>
         <Row>XX.X.</Row>
+        <Row>X.X.X</Row>
         <Row>X.X.X</Row>
         <Row>X.X.X</Row>
         <Row>X.X.X</Row>
@@ -838,8 +838,8 @@
       <Matrix>
         <Row>....</Row>
         <Row>....</Row>
-        <Row>....</Row>
         <Row>XXX.</Row>
+        <Row>XX.X</Row>
         <Row>XX.X</Row>
         <Row>XX.X</Row>
         <Row>XX.X</Row>
@@ -904,9 +904,9 @@
         <Row>....</Row>
         <Row>....</Row>
         <Row>.XXX</Row>
-        <Row>X...</Row>
+        <Row>XX..</Row>
         <Row>.XX.</Row>
-        <Row>...X</Row>
+        <Row>..XX</Row>
         <Row>XXX.</Row>
         <Row>....</Row>
         <Row>....</Row>
