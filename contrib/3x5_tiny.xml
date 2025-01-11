@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BitmapFont>
+  <Metrics ascenders="5" descenders="0"/>
+  <Characters>
+    <Character codepoint="32" width="3">
+      <Matrix>
+        <Row>...</Row>
+        <Row>...</Row>
+        <Row>...</Row>
+        <Row>...</Row>
+        <Row>...</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="48" width="3">
+      <Matrix>
+        <Row>.X.</Row>
+        <Row>X.X</Row>
+        <Row>X.X</Row>
+        <Row>X.X</Row>
+        <Row>.X.</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="49" width="3">
+      <Matrix>
+        <Row>.XX</Row>
+        <Row>X.X</Row>
+        <Row>..X</Row>
+        <Row>..X</Row>
+        <Row>..X</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="50" width="3">
+      <Matrix>
+        <Row>.X.</Row>
+        <Row>X.X</Row>
+        <Row>..X</Row>
+        <Row>.X.</Row>
+        <Row>XXX</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="51" width="3">
+      <Matrix>
+        <Row>XXX</Row>
+        <Row>..X</Row>
+        <Row>.X.</Row>
+        <Row>..X</Row>
+        <Row>XXX</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="52" width="3">
+      <Matrix>
+        <Row>X..</Row>
+        <Row>X.X</Row>
+        <Row>XXX</Row>
+        <Row>..X</Row>
+        <Row>..X</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="53" width="3">
+      <Matrix>
+        <Row>XXX</Row>
+        <Row>X..</Row>
+        <Row>XXX</Row>
+        <Row>..X</Row>
+        <Row>XX.</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="54" width="3">
+      <Matrix>
+        <Row>XXX</Row>
+        <Row>X..</Row>
+        <Row>XX.</Row>
+        <Row>X.X</Row>
+        <Row>XXX</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="55" width="3">
+      <Matrix>
+        <Row>XXX</Row>
+        <Row>..X</Row>
+        <Row>..X</Row>
+        <Row>.X.</Row>
+        <Row>.X.</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="56" width="3">
+      <Matrix>
+        <Row>XXX</Row>
+        <Row>X.X</Row>
+        <Row>.X.</Row>
+        <Row>X.X</Row>
+        <Row>XXX</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="57" width="3">
+      <Matrix>
+        <Row>XXX</Row>
+        <Row>X.X</Row>
+        <Row>.XX</Row>
+        <Row>..X</Row>
+        <Row>XXX</Row>
+      </Matrix>
+    </Character>
+  </Characters>
+</BitmapFont>
