@@ -1,6 +1,7 @@
 #include <QDebug>
 #include <QPaintEvent>
 #include <QPainter>
+#include <QPainterPath>
 #include "charactereditor.h"
 
 #define BLOCK_MARGIN (4)
