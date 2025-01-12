@@ -7,7 +7,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(const QString& initialProject, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , m_bitmapFontCharacterList(this)
@@ -25,6 +25,11 @@ MainWindow::MainWindow(QWidget *parent)
         ui->treeViewCharacters->selectionModel(), &QItemSelectionModel::currentChanged,
         this, &MainWindow::on_changedCharacter
     );
+
+    if (!initialProject.isEmpty())
+    {
+        openProject(initialProject);
+    }
 }
 
 MainWindow::~MainWindow()
@@ -159,6 +164,36 @@ void MainWindow::on_action_SaveAs_triggered()
     saveTo(filename);
 }
 
+void MainWindow::openProject(const QString& filename)
+{
+    try
+    {
+        QFile xmlFile(filename);
+        if (!xmlFile.open(QFile::ReadOnly))
+        {
+            throw std::runtime_error("error opening XML file \"" + filename.toStdString() + "\" for reading");
+        }
+        QDomDocument domDocument;
+        QString parseError;
+        if (!domDocument.setContent(&xmlFile, &parseError))
+        {
+            throw std::runtime_error(
+                QString("error parsing XML file \"%1\": %2").arg(filename).arg(parseError).toStdString());
+        }
+
+        m_bitmapFont = bitmapFontFromDomDocument(domDocument);
+        m_characterEditor->setBitmapFontMetrics(m_bitmapFont.metrics);
+        m_bitmapFontCharacterList.update(m_bitmapFont.characters);
+
+        targetFilename = filename;
+        updateWindowTitle();
+    }
+    catch (const std::exception& e)
+    {
+        QMessageBox::critical(this, "Error", QString("Could not load the bitmap font (%1)!").arg(e.what()));
+    }
+}
+
 void MainWindow::saveTo(const QString& filename)
 {
     try
@@ -197,32 +232,7 @@ void MainWindow::on_action_Open_triggered()
         return;
     }
 
-    try
-    {
-        QFile xmlFile(filename);
-        if (!xmlFile.open(QFile::ReadOnly))
-        {
-            throw std::runtime_error("error opening XML file \"" + filename.toStdString() + "\" for reading");
-        }
-        QDomDocument domDocument;
-        QString parseError;
-        if (!domDocument.setContent(&xmlFile, &parseError))
-        {
-            throw std::runtime_error(
-                QString("error parsing XML file \"%1\": %2").arg(filename).arg(parseError).toStdString());
-        }
-
-        m_bitmapFont = bitmapFontFromDomDocument(domDocument);
-        m_characterEditor->setBitmapFontMetrics(m_bitmapFont.metrics);
-        m_bitmapFontCharacterList.update(m_bitmapFont.characters);
-
-        targetFilename = filename;
-        updateWindowTitle();
-    }
-    catch (const std::exception& e)
-    {
-        QMessageBox::critical(this, "Error", QString("Could not load the bitmap font (%1)!").arg(e.what()));
-    }
+    openProject(filename);
 }
 
 void MainWindow::on_action_Export_triggered()
