@@ -16,7 +16,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(const QString& initialProject, QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -52,9 +52,11 @@ private:
     BitmapFontCharacterList m_bitmapFontCharacterList;
 
     void updateWindowTitle(void);
+    void openProject(const QString& filename);
     void saveTo(const QString& filename);
     void exportTo(const QString& filename);
     void exportQtResourceFile(const QString& filename, const QString& resourcesPath);
     void exportManifestFile(const QString& filename);
+    void exportCStub(const QString& filename);
 };
 #endif // MAINWINDOW_H

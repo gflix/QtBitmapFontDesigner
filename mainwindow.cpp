@@ -7,7 +7,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(const QString& initialProject, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , m_bitmapFontCharacterList(this)
@@ -25,6 +25,11 @@ MainWindow::MainWindow(QWidget *parent)
         ui->treeViewCharacters->selectionModel(), &QItemSelectionModel::currentChanged,
         this, &MainWindow::on_changedCharacter
     );
+
+    if (!initialProject.isEmpty())
+    {
+        openProject(initialProject);
+    }
 }
 
 MainWindow::~MainWindow()
@@ -159,6 +164,36 @@ void MainWindow::on_action_SaveAs_triggered()
     saveTo(filename);
 }
 
+void MainWindow::openProject(const QString& filename)
+{
+    try
+    {
+        QFile xmlFile(filename);
+        if (!xmlFile.open(QFile::ReadOnly))
+        {
+            throw std::runtime_error("error opening XML file \"" + filename.toStdString() + "\" for reading");
+        }
+        QDomDocument domDocument;
+        QString parseError;
+        if (!domDocument.setContent(&xmlFile, &parseError))
+        {
+            throw std::runtime_error(
+                QString("error parsing XML file \"%1\": %2").arg(filename).arg(parseError).toStdString());
+        }
+
+        m_bitmapFont = bitmapFontFromDomDocument(domDocument);
+        m_characterEditor->setBitmapFontMetrics(m_bitmapFont.metrics);
+        m_bitmapFontCharacterList.update(m_bitmapFont.characters);
+
+        targetFilename = filename;
+        updateWindowTitle();
+    }
+    catch (const std::exception& e)
+    {
+        QMessageBox::critical(this, "Error", QString("Could not load the bitmap font (%1)!").arg(e.what()));
+    }
+}
+
 void MainWindow::saveTo(const QString& filename)
 {
     try
@@ -197,32 +232,7 @@ void MainWindow::on_action_Open_triggered()
         return;
     }
 
-    try
-    {
-        QFile xmlFile(filename);
-        if (!xmlFile.open(QFile::ReadOnly))
-        {
-            throw std::runtime_error("error opening XML file \"" + filename.toStdString() + "\" for reading");
-        }
-        QDomDocument domDocument;
-        QString parseError;
-        if (!domDocument.setContent(&xmlFile, &parseError))
-        {
-            throw std::runtime_error(
-                QString("error parsing XML file \"%1\": %2").arg(filename).arg(parseError).toStdString());
-        }
-
-        m_bitmapFont = bitmapFontFromDomDocument(domDocument);
-        m_characterEditor->setBitmapFontMetrics(m_bitmapFont.metrics);
-        m_bitmapFontCharacterList.update(m_bitmapFont.characters);
-
-        targetFilename = filename;
-        updateWindowTitle();
-    }
-    catch (const std::exception& e)
-    {
-        QMessageBox::critical(this, "Error", QString("Could not load the bitmap font (%1)!").arg(e.what()));
-    }
+    openProject(filename);
 }
 
 void MainWindow::on_action_Export_triggered()
@@ -270,6 +280,8 @@ void MainWindow::exportTo(const QString& filename)
     {
         bitmapFontCharacterToImageFile(resourcesDirectory.filePath(QString("character-%1.png").arg(character.character.unicode())), character, m_bitmapFont.metrics);
     }
+
+    exportCStub(fileInfo.dir().absoluteFilePath(basename + ".c"));
 }
 
 void MainWindow::exportQtResourceFile(const QString& filename, const QString& resourcesPath)
@@ -300,4 +312,52 @@ void MainWindow::exportManifestFile(const QString& filename)
     }
     QTextStream xmlStream(&xmlFile);
     domDocument.save(xmlStream, 2);
+}
+
+void MainWindow::exportCStub(const QString& filename)
+{
+    QFile cFile(filename);
+    if (!cFile.open(QFile::WriteOnly | QFile::Text))
+    {
+        throw std::runtime_error("error opening C file \"" + filename.toStdString() + "\" for writing");
+    }
+    QTextStream cStream(&cFile);
+
+    auto fontHeight = m_bitmapFont.metrics.ascenders + m_bitmapFont.metrics.descenders;
+    int fontWidth = 0;
+    for (auto& character: m_bitmapFont.characters)
+    {
+        fontWidth = character.width > fontWidth ? character.width : fontWidth;
+    }
+
+    cStream << "#include <stdint.h>" << Qt::endl;
+    cStream << Qt::endl;
+    cStream << "#define FONT_WIDTH (" << fontWidth << ")" << Qt::endl;
+    cStream << "#define FONT_HEIGHT (" << fontHeight << ")" << Qt::endl;
+    cStream << Qt::endl;
+    cStream << "static uint16_t characters[][FONT_HEIGHT] = {" << Qt::endl;
+
+    int index = 0;
+    for (auto it = m_bitmapFont.characters.constBegin(); it != m_bitmapFont.characters.constEnd(); ++it)
+    {
+        auto& character = it.value();
+        cStream << "    {  /* " << index++ << ": '" << it.key() << "' */" << Qt::endl;
+
+        for (int y = 0; y < fontHeight; ++y)
+        {
+            uint32_t bitmap = 0;
+            for (int x = 0; x < character.width; ++x)
+            {
+                auto isSet = character.matrix[x][y];
+
+                bitmap <<= 1;
+                bitmap |= isSet ? 1 : 0;
+            }
+            cStream << "        0x" << QString::asprintf("%04x", bitmap) << "," << Qt::endl;
+        }
+
+        cStream << "    }," << Qt::endl;
+    }
+
+    cStream << "};" << Qt::endl;
 }

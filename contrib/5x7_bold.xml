@@ -1003,5 +1003,18 @@
         <Row>.....</Row>
       </Matrix>
     </Character>
+    <Character codepoint="176" width="3">
+      <Matrix>
+        <Row>.X.</Row>
+        <Row>X.X</Row>
+        <Row>.X.</Row>
+        <Row>...</Row>
+        <Row>...</Row>
+        <Row>...</Row>
+        <Row>...</Row>
+        <Row>...</Row>
+        <Row>...</Row>
+      </Matrix>
+    </Character>
   </Characters>
 </BitmapFont>

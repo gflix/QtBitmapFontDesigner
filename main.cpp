@@ -13,7 +13,12 @@ int main(int argc, char *argv[])
 
     qSetGlobalQHashSeed(0);
     QApplication a(argc, argv);
-    MainWindow w;
+    QString initialProject;
+    if (argc > 1)
+    {
+        initialProject = argv[argc - 1];
+    }
+    MainWindow w { initialProject };
     w.show();
     return a.exec();
 }
