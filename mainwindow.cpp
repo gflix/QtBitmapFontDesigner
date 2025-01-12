@@ -330,18 +330,18 @@ void MainWindow::exportCStub(const QString& filename)
         fontWidth = character.width > fontWidth ? character.width : fontWidth;
     }
 
-    cStream << "#include <stdint.h>" << endl;
-    cStream << endl;
-    cStream << "#define FONT_WIDTH (" << fontWidth << ")" << endl;
-    cStream << "#define FONT_HEIGHT (" << fontHeight << ")" << endl;
-    cStream << endl;
-    cStream << "static uint16_t characters[][FONT_HEIGHT] = {" << endl;
+    cStream << "#include <stdint.h>" << Qt::endl;
+    cStream << Qt::endl;
+    cStream << "#define FONT_WIDTH (" << fontWidth << ")" << Qt::endl;
+    cStream << "#define FONT_HEIGHT (" << fontHeight << ")" << Qt::endl;
+    cStream << Qt::endl;
+    cStream << "static uint16_t characters[][FONT_HEIGHT] = {" << Qt::endl;
 
     int index = 0;
     for (auto it = m_bitmapFont.characters.constBegin(); it != m_bitmapFont.characters.constEnd(); ++it)
     {
         auto& character = it.value();
-        cStream << "    {  /* " << index++ << ": '" << it.key() << "' */" << endl;
+        cStream << "    {  /* " << index++ << ": '" << it.key() << "' */" << Qt::endl;
 
         for (int y = 0; y < fontHeight; ++y)
         {
@@ -353,11 +353,11 @@ void MainWindow::exportCStub(const QString& filename)
                 bitmap <<= 1;
                 bitmap |= isSet ? 1 : 0;
             }
-            cStream << "        0x" << QString::asprintf("%04x", bitmap) << "," << endl;
+            cStream << "        0x" << QString::asprintf("%04x", bitmap) << "," << Qt::endl;
         }
 
-        cStream << "    }," << endl;
+        cStream << "    }," << Qt::endl;
     }
 
-    cStream << "};" << endl;
+    cStream << "};" << Qt::endl;
 }
