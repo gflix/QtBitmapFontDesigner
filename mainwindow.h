@@ -57,5 +57,6 @@ private:
     void exportTo(const QString& filename);
     void exportQtResourceFile(const QString& filename, const QString& resourcesPath);
     void exportManifestFile(const QString& filename);
+    void exportCStub(const QString& filename);
 };
 #endif // MAINWINDOW_H

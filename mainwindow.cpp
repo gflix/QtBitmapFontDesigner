@@ -280,6 +280,8 @@ void MainWindow::exportTo(const QString& filename)
     {
         bitmapFontCharacterToImageFile(resourcesDirectory.filePath(QString("character-%1.png").arg(character.character.unicode())), character, m_bitmapFont.metrics);
     }
+
+    exportCStub(fileInfo.dir().absoluteFilePath(basename + ".c"));
 }
 
 void MainWindow::exportQtResourceFile(const QString& filename, const QString& resourcesPath)
@@ -310,4 +312,52 @@ void MainWindow::exportManifestFile(const QString& filename)
     }
     QTextStream xmlStream(&xmlFile);
     domDocument.save(xmlStream, 2);
+}
+
+void MainWindow::exportCStub(const QString& filename)
+{
+    QFile cFile(filename);
+    if (!cFile.open(QFile::WriteOnly | QFile::Text))
+    {
+        throw std::runtime_error("error opening C file \"" + filename.toStdString() + "\" for writing");
+    }
+    QTextStream cStream(&cFile);
+
+    auto fontHeight = m_bitmapFont.metrics.ascenders + m_bitmapFont.metrics.descenders;
+    int fontWidth = 0;
+    for (auto& character: m_bitmapFont.characters)
+    {
+        fontWidth = character.width > fontWidth ? character.width : fontWidth;
+    }
+
+    cStream << "#include <stdint.h>" << endl;
+    cStream << endl;
+    cStream << "#define FONT_WIDTH (" << fontWidth << ")" << endl;
+    cStream << "#define FONT_HEIGHT (" << fontHeight << ")" << endl;
+    cStream << endl;
+    cStream << "static uint16_t characters[][FONT_HEIGHT] = {" << endl;
+
+    int index = 0;
+    for (auto it = m_bitmapFont.characters.constBegin(); it != m_bitmapFont.characters.constEnd(); ++it)
+    {
+        auto& character = it.value();
+        cStream << "    {  /* " << index++ << ": '" << it.key() << "' */" << endl;
+
+        for (int y = 0; y < fontHeight; ++y)
+        {
+            uint32_t bitmap = 0;
+            for (int x = 0; x < character.width; ++x)
+            {
+                auto isSet = character.matrix[x][y];
+
+                bitmap <<= 1;
+                bitmap |= isSet ? 1 : 0;
+            }
+            cStream << "        0x" << QString::asprintf("%04x", bitmap) << "," << endl;
+        }
+
+        cStream << "    }," << endl;
+    }
+
+    cStream << "};" << endl;
 }
