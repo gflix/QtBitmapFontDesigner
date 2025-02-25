@@ -28,6 +28,19 @@
         <Row>..</Row>
       </Matrix>
     </Character>
+    <Character codepoint="37" width="5">
+      <Matrix>
+        <Row>XX.XX</Row>
+        <Row>X..XX</Row>
+        <Row>..XX.</Row>
+        <Row>..X..</Row>
+        <Row>.XX..</Row>
+        <Row>XX..X</Row>
+        <Row>XX.XX</Row>
+        <Row>.....</Row>
+        <Row>.....</Row>
+      </Matrix>
+    </Character>
     <Character codepoint="40" width="3">
       <Matrix>
         <Row>.XX</Row>
@@ -869,8 +882,8 @@
         <Row>XX.XX</Row>
         <Row>XX.XX</Row>
         <Row>XXXX.</Row>
-        <Row>X....</Row>
-        <Row>X....</Row>
+        <Row>XX...</Row>
+        <Row>XX...</Row>
       </Matrix>
     </Character>
     <Character codepoint="113" width="5">
@@ -882,8 +895,8 @@
         <Row>XX.XX</Row>
         <Row>XX.XX</Row>
         <Row>.XXXX</Row>
-        <Row>....X</Row>
-        <Row>....X</Row>
+        <Row>...XX</Row>
+        <Row>...XX</Row>
       </Matrix>
     </Character>
     <Character codepoint="114" width="4">
@@ -1001,6 +1014,19 @@
         <Row>XXXXX</Row>
         <Row>.....</Row>
         <Row>.....</Row>
+      </Matrix>
+    </Character>
+    <Character codepoint="126" width="4">
+      <Matrix>
+        <Row>....</Row>
+        <Row>....</Row>
+        <Row>.X.X</Row>
+        <Row>XXXX</Row>
+        <Row>X.X.</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+        <Row>....</Row>
+        <Row>....</Row>
       </Matrix>
     </Character>
     <Character codepoint="176" width="3">
